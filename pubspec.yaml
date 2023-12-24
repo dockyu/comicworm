@@ -32,6 +32,7 @@ dependencies:
     sdk: flutter
   flutter_rust_bridge: 1.82.6
   ffi: ^2.0.1
+  path_provider: ^2.1.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -55,6 +56,8 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  assets:
+    - assets/rust.dll
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

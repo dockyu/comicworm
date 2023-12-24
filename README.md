@@ -1,16 +1,33 @@
 # comicworm
 
-A new Flutter project.
+An integrated comic crawler.
 
-## Getting Started
+## Development  Environment
 
-This project is a starting point for a Flutter application.
+### Requirement
 
-A few resources to get you started if this is your first Flutter project:
+1. [install Flutter](https://docs.flutter.dev/get-started/install)
+2. [install Rust](https://www.rust-lang.org/tools/install)
+3. [install LLVM](https://pub.dev/documentation/ffigen/latest/#installing-llvm)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Download Flutter Dependencies
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```
+cd <path_to_project>
+flutter pub get
+```
+
+## Build
+
+###### compile rust.dll
+```
+cd <path_to_project>/rust
+cargo build --release --lib
+```
+
+the `rust.dll` will be compile to `<path_to_project>/rust/target/release/`, move it to `<path_to_project>/assets/`
+
+###### build Windows Application
+```
+flutter build Windows
+```
