@@ -19,7 +19,14 @@ flutter pub get
 
 ## Build
 
-###### compile rust.dll
+### Generate Dart FFI
+
+```
+flutter_rust_bridge_codegen --rust-input src/api.rs --dart-output ../lib/bridge_generated.dart --llvm-path "<LLVM_path>"
+```
+
+### Compile rust.dll
+
 ```
 cd <path_to_project>/rust
 cargo build --release --lib
@@ -27,7 +34,8 @@ cargo build --release --lib
 
 the `rust.dll` will be compile to `<path_to_project>/rust/target/release/`, move it to `<path_to_project>/assets/`
 
-###### build Windows Application
+### Build Windows Application
+
 ```
 flutter build Windows
 ```
