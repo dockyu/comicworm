@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   late List<Widget> _pages;
-  static const Color backgroundColor = Color(0xFFD7D6D6); // 背景色
+  static const Color backgroundColor = Color(0xFFFFFFFF); // 背景色
 
   @override
   void initState() {
