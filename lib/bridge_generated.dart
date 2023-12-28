@@ -11,13 +11,9 @@ import 'package:uuid/uuid.dart';
 import 'dart:ffi' as ffi;
 
 abstract class Rust {
-  Future<String> longTask({dynamic hint});
+  Future<String> performSearch({required String query, dynamic hint});
 
-  FlutterRustBridgeTaskConstMeta get kLongTaskConstMeta;
-
-  Future<String> shortTask({dynamic hint});
-
-  FlutterRustBridgeTaskConstMeta get kShortTaskConstMeta;
+  FlutterRustBridgeTaskConstMeta get kPerformSearchConstMeta;
 }
 
 class RustImpl implements Rust {
@@ -28,38 +24,22 @@ class RustImpl implements Rust {
   factory RustImpl.wasm(FutureOr<WasmModule> module) =>
       RustImpl(module as ExternalLibrary);
   RustImpl.raw(this._platform);
-  Future<String> longTask({dynamic hint}) {
+  Future<String> performSearch({required String query, dynamic hint}) {
+    var arg0 = _platform.api2wire_String(query);
     return _platform.executeNormal(FlutterRustBridgeTask(
-      callFfi: (port_) => _platform.inner.wire_long_task(port_),
+      callFfi: (port_) => _platform.inner.wire_perform_search(port_, arg0),
       parseSuccessData: _wire2api_String,
       parseErrorData: null,
-      constMeta: kLongTaskConstMeta,
-      argValues: [],
+      constMeta: kPerformSearchConstMeta,
+      argValues: [query],
       hint: hint,
     ));
   }
 
-  FlutterRustBridgeTaskConstMeta get kLongTaskConstMeta =>
+  FlutterRustBridgeTaskConstMeta get kPerformSearchConstMeta =>
       const FlutterRustBridgeTaskConstMeta(
-        debugName: "long_task",
-        argNames: [],
-      );
-
-  Future<String> shortTask({dynamic hint}) {
-    return _platform.executeNormal(FlutterRustBridgeTask(
-      callFfi: (port_) => _platform.inner.wire_short_task(port_),
-      parseSuccessData: _wire2api_String,
-      parseErrorData: null,
-      constMeta: kShortTaskConstMeta,
-      argValues: [],
-      hint: hint,
-    ));
-  }
-
-  FlutterRustBridgeTaskConstMeta get kShortTaskConstMeta =>
-      const FlutterRustBridgeTaskConstMeta(
-        debugName: "short_task",
-        argNames: [],
+        debugName: "perform_search",
+        argNames: ["query"],
       );
 
   void dispose() {
@@ -82,6 +62,11 @@ class RustImpl implements Rust {
 
 // Section: api2wire
 
+@protected
+int api2wire_u8(int raw) {
+  return raw;
+}
+
 // Section: finalizer
 
 class RustPlatform extends FlutterRustBridgeBase<RustWire> {
@@ -89,6 +74,17 @@ class RustPlatform extends FlutterRustBridgeBase<RustWire> {
 
 // Section: api2wire
 
+  @protected
+  ffi.Pointer<wire_uint_8_list> api2wire_String(String raw) {
+    return api2wire_uint_8_list(utf8.encoder.convert(raw));
+  }
+
+  @protected
+  ffi.Pointer<wire_uint_8_list> api2wire_uint_8_list(Uint8List raw) {
+    final ans = inner.new_uint_8_list_0(raw.length);
+    ans.ref.ptr.asTypedList(raw.length).setAll(0, raw);
+    return ans;
+  }
 // Section: finalizer
 
 // Section: api_fill_to_wire
@@ -189,33 +185,37 @@ class RustWire implements FlutterRustBridgeWireBase {
   late final _init_frb_dart_api_dl = _init_frb_dart_api_dlPtr
       .asFunction<int Function(ffi.Pointer<ffi.Void>)>();
 
-  void wire_long_task(
+  void wire_perform_search(
     int port_,
+    ffi.Pointer<wire_uint_8_list> query,
   ) {
-    return _wire_long_task(
+    return _wire_perform_search(
       port_,
+      query,
     );
   }
 
-  late final _wire_long_taskPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64)>>(
-          'wire_long_task');
-  late final _wire_long_task =
-      _wire_long_taskPtr.asFunction<void Function(int)>();
+  late final _wire_perform_searchPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ffi.Int64,
+              ffi.Pointer<wire_uint_8_list>)>>('wire_perform_search');
+  late final _wire_perform_search = _wire_perform_searchPtr
+      .asFunction<void Function(int, ffi.Pointer<wire_uint_8_list>)>();
 
-  void wire_short_task(
-    int port_,
+  ffi.Pointer<wire_uint_8_list> new_uint_8_list_0(
+    int len,
   ) {
-    return _wire_short_task(
-      port_,
+    return _new_uint_8_list_0(
+      len,
     );
   }
 
-  late final _wire_short_taskPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64)>>(
-          'wire_short_task');
-  late final _wire_short_task =
-      _wire_short_taskPtr.asFunction<void Function(int)>();
+  late final _new_uint_8_list_0Ptr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<wire_uint_8_list> Function(ffi.Int32)>>(
+      'new_uint_8_list_0');
+  late final _new_uint_8_list_0 = _new_uint_8_list_0Ptr
+      .asFunction<ffi.Pointer<wire_uint_8_list> Function(int)>();
 
   void free_WireSyncReturn(
     WireSyncReturn ptr,
@@ -233,6 +233,13 @@ class RustWire implements FlutterRustBridgeWireBase {
 }
 
 final class _Dart_Handle extends ffi.Opaque {}
+
+final class wire_uint_8_list extends ffi.Struct {
+  external ffi.Pointer<ffi.Uint8> ptr;
+
+  @ffi.Int32()
+  external int len;
+}
 
 typedef DartPostCObjectFnType = ffi.Pointer<
     ffi.NativeFunction<

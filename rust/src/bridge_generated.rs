@@ -22,24 +22,17 @@ use std::sync::Arc;
 
 // Section: wire functions
 
-fn wire_long_task_impl(port_: MessagePort) {
+fn wire_perform_search_impl(port_: MessagePort, query: impl Wire2Api<String> + UnwindSafe) {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap::<_, _, _, String, _>(
         WrapInfo {
-            debug_name: "long_task",
+            debug_name: "perform_search",
             port: Some(port_),
             mode: FfiCallMode::Normal,
         },
-        move || move |task_callback| Result::<_, ()>::Ok(long_task()),
-    )
-}
-fn wire_short_task_impl(port_: MessagePort) {
-    FLUTTER_RUST_BRIDGE_HANDLER.wrap::<_, _, _, String, _>(
-        WrapInfo {
-            debug_name: "short_task",
-            port: Some(port_),
-            mode: FfiCallMode::Normal,
+        move || {
+            let api_query = query.wire2api();
+            move |task_callback| Result::<_, ()>::Ok(perform_search(api_query))
         },
-        move || move |task_callback| Result::<_, ()>::Ok(short_task()),
     )
 }
 // Section: wrapper structs
@@ -64,6 +57,13 @@ where
         (!self.is_null()).then(|| self.wire2api())
     }
 }
+
+impl Wire2Api<u8> for u8 {
+    fn wire2api(self) -> u8 {
+        self
+    }
+}
+
 // Section: impl IntoDart
 
 // Section: executor

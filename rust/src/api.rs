@@ -1,14 +1,9 @@
-use flutter_rust_bridge::frb; // 確保引入了 flutter_rust_bridge 的宏
+// api.rs
 
-// 引入 testmodule
-use crate::testmodule;
-
-#[frb]
-pub fn long_task() -> String {
-    testmodule::long_task()
-}
+use flutter_rust_bridge::frb;
+use crate::backend_module;
 
 #[frb]
-pub fn short_task() -> String {
-    testmodule::short_task()
+pub fn perform_search(query: String) -> String {
+    backend_module::perform_search(query)
 }

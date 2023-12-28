@@ -1,7 +1,13 @@
 // 檔案名稱: screen/home_screen.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'dart:convert'; // 导入 dart:convert 库
+
+import '../provider/search_result_provider.dart';
 import '../component/search_box.dart'; // 引入 SearchBox 組件
 import '../component/filter_button.dart'; // 引入 FilterButton 組件
+import '../component/search_result_block.dart'; // 引入 SearchResultBlock
+import '../model/search_result.dart';
 import '../bridge_generated.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 40.0, // 設置 AppBar 的高度，根據您的設計需求進行調整
@@ -43,20 +50,31 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         // 其他 AppBar 配置...
       ),
-      body: Center(
-        child: Text('這裡是首頁'),
-      ),
+      body: SearchResultBlock(), // 直接使用 SearchResultBlock
     );
   }
 
-  void _startSearch(String query) {
+  void _startSearch(String query) async {
     setState(() {
       _isSearching = true;
     });
-    // ... 搜索邏輯
-    setState(() {
-      _isSearching = false;
-    });
+
+    try {
+      final jsonString = await widget.rust.performSearch(query: query);
+      final Map<String, dynamic> jsonMap = json.decode(jsonString);
+      final List<dynamic> jsonList = jsonMap['results']; // 获取 'results' 键对应的数组
+      final List<SearchResult> searchResults = jsonList
+          .map((jsonItem) => SearchResult.fromJson(jsonItem as Map<String, dynamic>))
+          .toList();
+
+      Provider.of<SearchResultProvider>(context, listen: false).setSearchResults(searchResults);
+    } catch (e) {
+      print('搜索出错: $e');
+    } finally {
+      setState(() {
+        _isSearching = false;
+      });
+    }
   }
 
   void _showFilterDialog() {
