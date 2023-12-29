@@ -3,12 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/search_result_provider.dart'; // 引入 SearchResultProvider
-import '../model/search_result.dart'; // 引入 SearchResult 类
+import '../model/search_result.dart'; // 引入 SearchResult 類
 
 class SearchResultBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // 从 Provider 获取搜索结果
+    // 從 Provider 獲取搜索結果
     final searchResults = Provider.of<SearchResultProvider>(context).searchResults;
 
     return ListView.builder(

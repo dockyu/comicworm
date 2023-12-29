@@ -11,5 +11,5 @@ class SearchResultProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // 可以添加更多与搜索结果相关的方法和逻辑
+  // 可以添加更多與搜索結果相關的方法和邏輯
 }

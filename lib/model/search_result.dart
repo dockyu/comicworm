@@ -1,4 +1,4 @@
-import 'dart:convert'; // 导入 dart:convert 库
+import 'dart:convert'; // 導入 dart:convert 庫
 
 class SearchResult {
   final String name;
