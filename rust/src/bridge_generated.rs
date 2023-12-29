@@ -22,7 +22,11 @@ use std::sync::Arc;
 
 // Section: wire functions
 
-fn wire_perform_search_impl(port_: MessagePort, query: impl Wire2Api<String> + UnwindSafe) {
+fn wire_perform_search_impl(
+    port_: MessagePort,
+    query: impl Wire2Api<String> + UnwindSafe,
+    sites_status: impl Wire2Api<String> + UnwindSafe,
+) {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap::<_, _, _, String, _>(
         WrapInfo {
             debug_name: "perform_search",
@@ -31,7 +35,8 @@ fn wire_perform_search_impl(port_: MessagePort, query: impl Wire2Api<String> + U
         },
         move || {
             let api_query = query.wire2api();
-            move |task_callback| Result::<_, ()>::Ok(perform_search(api_query))
+            let api_sites_status = sites_status.wire2api();
+            move |task_callback| Result::<_, ()>::Ok(perform_search(api_query, api_sites_status))
         },
     )
 }

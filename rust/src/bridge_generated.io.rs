@@ -2,8 +2,12 @@ use super::*;
 // Section: wire functions
 
 #[no_mangle]
-pub extern "C" fn wire_perform_search(port_: i64, query: *mut wire_uint_8_list) {
-    wire_perform_search_impl(port_, query)
+pub extern "C" fn wire_perform_search(
+    port_: i64,
+    query: *mut wire_uint_8_list,
+    sites_status: *mut wire_uint_8_list,
+) {
+    wire_perform_search_impl(port_, query, sites_status)
 }
 
 // Section: allocate functions

@@ -13,7 +13,6 @@ An integrated comic crawler.
 ### Download Flutter Dependencies
 
 ```
-cd <path_to_project>
 flutter pub get
 ```
 
@@ -21,21 +20,24 @@ flutter pub get
 
 ### Generate Dart FFI
 
-```
-flutter_rust_bridge_codegen --rust-input src/api.rs --dart-output ../lib/bridge_generated.dart --llvm-path "<LLVM_path>"
+```bash
+flutter_rust_bridge_codegen --rust-input src/api.rs --dart-output ../lib/bridge_generated.dart --llvm-path "A:\LLVM"
 ```
 
 ### Compile rust.dll
 
-```
-cd <path_to_project>/rust
+```bash
 cargo build --release --lib
 ```
 
-the `rust.dll` will be compile to `<path_to_project>/rust/target/release/`, move it to `<path_to_project>/assets/`
+### Add rust.dll to asset
+
+```bash
+setdll.bat
+```
 
 ### Build Windows Application
 
-```
+```bash
 flutter build Windows
 ```
