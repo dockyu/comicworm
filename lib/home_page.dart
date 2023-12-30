@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
               width: navWidth,
               child: Column(
                 children: [
-                  LogoBlock(isIconOnly: showIconOnly), // 添加 LogoBlock
+                  // LogoBlock(isIconOnly: showIconOnly), // 添加 LogoBlock
                   Expanded(
                     child: NavigationColumn(
                       onSelectItem: (index) {
