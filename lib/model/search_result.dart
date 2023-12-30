@@ -4,12 +4,14 @@ class SearchResult {
   final String name;
   final String url;
   final String source;
+  final String sourceName;
   final String imageUrl;
 
   SearchResult({
     required this.name,
     required this.url,
     required this.source,
+    required this.sourceName,
     required this.imageUrl,
   });
 
@@ -18,6 +20,7 @@ class SearchResult {
       name: json['name'],
       url: json['url'],
       source: json['source'],
+      sourceName: json['sourceName'],
       imageUrl: json['image_url'],
     );
   }

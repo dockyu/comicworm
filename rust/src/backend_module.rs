@@ -13,6 +13,7 @@ pub fn perform_search(query: String, sites_status: String) -> String {
                 "name": format!("{} - webtoon", &query),
                 "url": "https://www.webtoons.com/zh-hant/city-office/newface/list?title_no=1759",
                 "source": "webtoon",
+                "sourceName": "Webtoon",
                 "image_url": "https://webtoon-phinf.pstatic.net/20230606_170/16860594695688yp2P_PNG/4thumb_ipad_510x510.png?type=q90"
             }));
         }
@@ -24,6 +25,7 @@ pub fn perform_search(query: String, sites_status: String) -> String {
                 "name": format!("{} - 包子漫畫", &query),
                 "url": "https://www.baozimh.com/comic/shiyouzhiguocaiseban-dinianmiaogongzuoshi",
                 "source": "baozimh",
+                "sourceName": "包子漫畫",
                 "image_url": "https://static-tw.baozimh.com/cover/shiyouzhiguocaiseban-dinianmiaogongzuoshi.jpg?w=285&h=375&q=100"
             }));
         }

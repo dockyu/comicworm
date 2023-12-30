@@ -43,7 +43,7 @@ class SearchResultCard extends StatelessWidget {
                       searchResult.name,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Text(searchResult.source),
+                    Text(searchResult.sourceName),
                   ],
                 ),
               ),
