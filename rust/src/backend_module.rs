@@ -11,9 +11,9 @@ pub fn perform_search(query: String, sites_status: String) -> String {
         if site["isEnabled"].as_bool().unwrap_or(false) && site["isSelected"].as_bool().unwrap_or(false) {
             results.push(json!({
                 "name": format!("{} - webtoon", &query),
-                "url": "https://www.webtoons.com",
+                "url": "https://www.webtoons.com/zh-hant/city-office/newface/list?title_no=1759",
                 "source": "webtoon",
-                "image_url": "https://example.com/images/1.jpg"
+                "image_url": "https://webtoon-phinf.pstatic.net/20230606_170/16860594695688yp2P_PNG/4thumb_ipad_510x510.png?type=q90"
             }));
         }
     }
@@ -22,9 +22,9 @@ pub fn perform_search(query: String, sites_status: String) -> String {
         if site["isEnabled"].as_bool().unwrap_or(false) && site["isSelected"].as_bool().unwrap_or(false) {
             results.push(json!({
                 "name": format!("{} - 包子漫畫", &query),
-                "url": "https://www.baozimh.com/",
+                "url": "https://www.baozimh.com/comic/shiyouzhiguocaiseban-dinianmiaogongzuoshi",
                 "source": "baozimh",
-                "image_url": "https://example.com/images/1.jpg"
+                "image_url": "https://static-tw.baozimh.com/cover/shiyouzhiguocaiseban-dinianmiaogongzuoshi.jpg?w=285&h=375&q=100"
             }));
         }
     }

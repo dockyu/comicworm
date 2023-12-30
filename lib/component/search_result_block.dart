@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import './search_result_card.dart';
 import '../provider/search_result_provider.dart'; // 引入 SearchResultProvider
 import '../model/search_result.dart'; // 引入 SearchResult 類
 
@@ -15,11 +16,7 @@ class SearchResultBlock extends StatelessWidget {
       itemCount: searchResults.length,
       itemBuilder: (context, index) {
         final result = searchResults[index];
-        return ListTile(
-          title: Text(result.name),
-          subtitle: Text(result.url),
-          // 其他 UI 元素...
-        );
+        return SearchResultCard(searchResult: result);
       },
     );
   }
