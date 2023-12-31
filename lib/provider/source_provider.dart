@@ -73,7 +73,7 @@ class SourceProvider with ChangeNotifier {
 
   Future<void> loadSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? sourcesJson = prefs.getString('selected_sources');
+    String? sourcesJson = prefs.getString('sources');
 
     if (sourcesJson != null) {
       Map<String, dynamic> existingSourcesMap = json.decode(sourcesJson);
@@ -97,7 +97,7 @@ class SourceProvider with ChangeNotifier {
   Future<void> saveSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String sourcesJson = json.encode(_sources.map((key, value) => MapEntry(key, value.toJson())));
-    await prefs.setString('selected_sources', sourcesJson);
+    await prefs.setString('sources', sourcesJson);
   }
 
   // 其他方法...
