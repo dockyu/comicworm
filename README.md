@@ -39,5 +39,5 @@ setdll.bat
 ### Build Windows Application
 
 ```bash
-flutter build Windows
+flutter build windows
 ```
