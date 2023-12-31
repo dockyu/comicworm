@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../provider/search_result_provider.dart';
-import '../provider/source_provider.dart';
-import '../component/search/search_box.dart';
-import '../component/search/filter_button.dart';
-import '../component/search/filter_dialog.dart';
-import '../component/search/search_result_block.dart';
 import '../bridge_generated.dart'; // 確保導入了 RustImpl
+import '../component/search/filter_button.dart';
+import '../component/search/search_box.dart';
+import '../component/search/search_result_block.dart';
 
 class SearchScreen extends StatefulWidget {
   final RustImpl rust;

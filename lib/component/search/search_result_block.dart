@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'search_result_card.dart';
+
 import '../../provider/search_result_provider.dart'; // 引入 SearchResultProvider
-import '../../model/search_result.dart'; // 引入 SearchResult 類
+import 'search_result_card.dart';
 
 class SearchResultBlock extends StatelessWidget {
   @override
