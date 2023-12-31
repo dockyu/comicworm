@@ -57,7 +57,7 @@ class SourceProvider with ChangeNotifier {
       '嗨皮漫畫': SourceStatus(isEnabled: true, isSelected: false),
       '漫畫人': SourceStatus(isEnabled: false, isSelected: false),
       '咚漫': SourceStatus(isEnabled: false, isSelected: false),
-      // 更多預設來源...
+      // 省略其他來源...
     };
 
     if (sourcesJson != null) {
@@ -65,17 +65,19 @@ class SourceProvider with ChangeNotifier {
       Map<String, SourceStatus> existingSources = existingSourcesMap.map(
         (key, value) => MapEntry(key, SourceStatus.fromJson(value)));
 
-      // 合併預設來源和已存在的來源，保留已存在的來源設置
+      // 合併並篩選來源，僅保留存在於預設來源中的來源
       _sources = {
-        ...defaultSources,
-        ...existingSources,
+        for (var d in defaultSources.entries)
+          if (existingSources.containsKey(d.key))
+            d.key: existingSources[d.key]!
+          else
+            d.key: d.value,
       };
     } else {
       _sources = defaultSources;
     }
     notifyListeners();
   }
-
 
   Future<void> saveSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

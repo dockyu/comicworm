@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../component/source_block.dart';
 import '../bridge_generated.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -8,8 +9,12 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('這裡是設定頁'),
+    return ListView(
+      padding: EdgeInsets.only(top: 0),  // 設置上邊距為 0
+      children: [
+        SourceBlock(),
+        // 可以在這裡添加更多的組件
+      ],
     );
   }
 }
