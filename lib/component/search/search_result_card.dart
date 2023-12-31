@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../model/search_result.dart';
+import '../../model/search_result.dart';
 
 class SearchResultCard extends StatelessWidget {
   final SearchResult searchResult;

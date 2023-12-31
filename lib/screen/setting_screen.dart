@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../component/source_block.dart';
+import '../component/setting/source_block.dart';
 import '../bridge_generated.dart';
 
 class SettingScreen extends StatelessWidget {

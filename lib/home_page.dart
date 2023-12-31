@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'bridge_generated.dart';
-import 'component/navigation_column.dart';
-import 'component/logo_block.dart';
+import 'component/navigation/navigation_column.dart';
+import 'component/navigation/logo_block.dart';
 import 'screen/search_screen.dart';
 import 'screen/download_screen.dart';
 import 'screen/setting_screen.dart';

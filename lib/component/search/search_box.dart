@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../provider/source_provider.dart';
-import '../provider/search_result_provider.dart';
-import '../model/search_result.dart';
-import '../bridge_generated.dart';
+import '../../provider/source_provider.dart';
+import '../../provider/search_result_provider.dart';
+import '../../model/search_result.dart';
+import '../../bridge_generated.dart';
 import 'dart:convert';
 
 class SearchBox extends StatefulWidget {
