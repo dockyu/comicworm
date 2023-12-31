@@ -21,8 +21,8 @@ class _NavigationColumnState extends State<NavigationColumn> {
       color: backgroundColor, // 為導航欄添加底色
       child: Column(
         children: <Widget>[
-          _buildNavItem(Icons.home, '首頁', 0),
-          _buildNavItem(Icons.task, '任務', 1),
+          _buildNavItem(Icons.search, '搜尋', 0),
+          _buildNavItem(Icons.download, '下載', 1),
           _buildNavItem(Icons.settings, '設定', 2),
         ],
       ),

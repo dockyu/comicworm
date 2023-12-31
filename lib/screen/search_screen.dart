@@ -9,16 +9,16 @@ import '../component/filter_dialog.dart';
 import '../component/search_result_block.dart';
 import '../bridge_generated.dart'; // 確保導入了 RustImpl
 
-class HomeScreen extends StatefulWidget {
+class SearchScreen extends StatefulWidget {
   final RustImpl rust;
 
-  HomeScreen({Key? key, required this.rust}) : super(key: key);
+  SearchScreen({Key? key, required this.rust}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _SearchScreenState createState() => _SearchScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
 
   @override

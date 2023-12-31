@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'bridge_generated.dart';
 import 'component/navigation_column.dart';
 import 'component/logo_block.dart';
-import 'screen/home_screen.dart';
-import 'screen/task_screen.dart';
+import 'screen/search_screen.dart';
+import 'screen/download_screen.dart';
 import 'screen/setting_screen.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,8 +25,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _pages = [
       // 在 initState 中初始化 _pages
-      HomeScreen(rust: widget.rust),
-      TaskScreen(rust: widget.rust),
+      SearchScreen(rust: widget.rust),
+      DownloadScreen(rust: widget.rust),
       SettingScreen(rust: widget.rust),
     ];
   }
