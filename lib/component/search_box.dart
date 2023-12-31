@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../provider/source_provider.dart';
+import '../provider/search_result_provider.dart';
+import '../model/search_result.dart';
+import '../bridge_generated.dart';
+import 'dart:convert';
 
 class SearchBox extends StatefulWidget {
   final TextEditingController searchController;
-  final ValueChanged<String> onSearch;
-  final bool isSearching;
+  final RustImpl rust;
 
   const SearchBox({
     Key? key,
     required this.searchController,
-    required this.onSearch,
-    this.isSearching = false,
+    required this.rust,
   }) : super(key: key);
 
   @override
@@ -17,37 +21,72 @@ class SearchBox extends StatefulWidget {
 }
 
 class _SearchBoxState extends State<SearchBox> {
+  bool _isSearching = false;
+
+  Future<void> _startSearch(String query) async {
+    if (query.isEmpty) return;
+
+    setState(() {
+      _isSearching = true;
+    });
+
+    try {
+      final sourceProvider = Provider.of<SourceProvider>(context, listen: false);
+      final sourcesStatus = sourceProvider.sources.map((key, value) => MapEntry(key, {
+        'isEnabled': value.isEnabled,
+        'isSelected': value.isSelected,
+      }));
+
+      final sourcesStatusJson = json.encode(sourcesStatus);
+
+      final jsonString = await widget.rust.performSearch(query: query, sitesStatus: sourcesStatusJson);
+      final Map<String, dynamic> jsonMap = json.decode(jsonString);
+      final List<dynamic> jsonList = jsonMap['results'];
+      final List<SearchResult> searchResults = jsonList
+          .map((jsonItem) => SearchResult.fromJson(jsonItem as Map<String, dynamic>))
+          .toList();
+
+      Provider.of<SearchResultProvider>(context, listen: false).setSearchResults(searchResults);
+    } catch (e) {
+      print('搜索出錯: $e');
+    } finally {
+      setState(() {
+        _isSearching = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10), // 增加水平方向的內邊距
+      padding: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
-        color: Colors.white, // 背景色為白色
-        border: Border.all(color: Colors.grey.shade300, width: 1.0), // 邊框顏色和寬度
-        borderRadius: BorderRadius.circular(30.0), // 圓角半徑更大，匹配設計
+        color: Colors.white,
+        border: Border.all(color: Colors.grey.shade300, width: 1.0),
+        borderRadius: BorderRadius.circular(30.0),
       ),
       child: TextField(
         controller: widget.searchController,
         decoration: InputDecoration(
           hintText: '搜索...',
-          prefixIcon: null, // 移除左側圖標
+          prefixIcon: null,
           suffixIcon: widget.searchController.text.isEmpty
-              ? Icon(Icons.search) // 當沒有文字輸入時顯示搜索圖標
+              ? Icon(Icons.search)
               : IconButton(
                   icon: Icon(Icons.clear),
                   onPressed: () {
                     widget.searchController.clear();
-                    widget.onSearch(''); // 清除文字後觸發搜索
+                    _startSearch('');
                   },
                 ),
-          border: InputBorder.none, // 移除 TextField 默認的邊框
-          contentPadding: EdgeInsets.symmetric(vertical: 10).copyWith(left: 20), // 增加左邊距離
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.symmetric(vertical: 10).copyWith(left: 20),
         ),
-        style: TextStyle(fontSize: 16), // 文字樣式，可根據需要調整
+        style: TextStyle(fontSize: 16),
         onChanged: (value) {
-          setState(() {}); // 更新UI
+          setState(() {});
         },
-        onSubmitted: widget.onSearch,
+        onSubmitted: _startSearch,
       ),
     );
   }

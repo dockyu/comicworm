@@ -1,16 +1,14 @@
-// 檔案名稱: component/filter_button.dart
 import 'package:flutter/material.dart';
+import 'filter_dialog.dart'; // 確保導入了 filter_dialog
 
 class FilterButton extends StatelessWidget {
-  final VoidCallback onFilterTap;
-
-  const FilterButton({Key? key, required this.onFilterTap}) : super(key: key);
+  const FilterButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
       icon: Icon(Icons.filter_list),
-      onPressed: onFilterTap,
+      onPressed: () => showFilterDialog(context), // 直接調用 showFilterDialog
     );
   }
 }
