@@ -27,7 +27,7 @@ use crate::test_module::SimpleClass;
 fn wire_perform_search_impl(
     port_: MessagePort,
     query: impl Wire2Api<String> + UnwindSafe,
-    sites_status: impl Wire2Api<String> + UnwindSafe,
+    sources_status: impl Wire2Api<String> + UnwindSafe,
 ) {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap::<_, _, _, String, _>(
         WrapInfo {
@@ -37,8 +37,8 @@ fn wire_perform_search_impl(
         },
         move || {
             let api_query = query.wire2api();
-            let api_sites_status = sites_status.wire2api();
-            move |task_callback| Result::<_, ()>::Ok(perform_search(api_query, api_sites_status))
+            let api_sources_status = sources_status.wire2api();
+            move |task_callback| Result::<_, ()>::Ok(perform_search(api_query, api_sources_status))
         },
     )
 }

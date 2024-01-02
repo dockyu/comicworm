@@ -39,7 +39,7 @@ class _SearchBoxState extends State<SearchBox> {
 
       final sourcesStatusJson = json.encode(sourcesStatus);
 
-      final jsonString = await widget.rust.performSearch(query: query, sitesStatus: sourcesStatusJson);
+      final jsonString = await widget.rust.performSearch(query: query, sourcesStatus: sourcesStatusJson);
       final Map<String, dynamic> jsonMap = json.decode(jsonString);
       final List<dynamic> jsonList = jsonMap['results'];
       final List<SearchResult> searchResults = jsonList

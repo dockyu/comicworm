@@ -5,8 +5,8 @@ use crate::search_module;
 use crate::test_module::SimpleClass;
 
 #[frb]
-pub fn perform_search(query: String, sites_status: String) -> String {
-    search_module::perform_search(query, sites_status)
+pub fn perform_search(query: String, sources_status: String) -> String {
+    search_module::perform_search(query, sources_status)
 }
 
 #[frb]

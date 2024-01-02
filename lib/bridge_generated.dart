@@ -12,7 +12,7 @@ import 'dart:ffi' as ffi;
 
 abstract class Rust {
   Future<String> performSearch(
-      {required String query, required String sitesStatus, dynamic hint});
+      {required String query, required String sourcesStatus, dynamic hint});
 
   FlutterRustBridgeTaskConstMeta get kPerformSearchConstMeta;
 
@@ -49,16 +49,16 @@ class RustImpl implements Rust {
       RustImpl(module as ExternalLibrary);
   RustImpl.raw(this._platform);
   Future<String> performSearch(
-      {required String query, required String sitesStatus, dynamic hint}) {
+      {required String query, required String sourcesStatus, dynamic hint}) {
     var arg0 = _platform.api2wire_String(query);
-    var arg1 = _platform.api2wire_String(sitesStatus);
+    var arg1 = _platform.api2wire_String(sourcesStatus);
     return _platform.executeNormal(FlutterRustBridgeTask(
       callFfi: (port_) =>
           _platform.inner.wire_perform_search(port_, arg0, arg1),
       parseSuccessData: _wire2api_String,
       parseErrorData: null,
       constMeta: kPerformSearchConstMeta,
-      argValues: [query, sitesStatus],
+      argValues: [query, sourcesStatus],
       hint: hint,
     ));
   }
@@ -66,7 +66,7 @@ class RustImpl implements Rust {
   FlutterRustBridgeTaskConstMeta get kPerformSearchConstMeta =>
       const FlutterRustBridgeTaskConstMeta(
         debugName: "perform_search",
-        argNames: ["query", "sitesStatus"],
+        argNames: ["query", "sourcesStatus"],
       );
 
   Future<SimpleClass> createSimpleClass(
@@ -305,12 +305,12 @@ class RustWire implements FlutterRustBridgeWireBase {
   void wire_perform_search(
     int port_,
     ffi.Pointer<wire_uint_8_list> query,
-    ffi.Pointer<wire_uint_8_list> sites_status,
+    ffi.Pointer<wire_uint_8_list> sources_status,
   ) {
     return _wire_perform_search(
       port_,
       query,
-      sites_status,
+      sources_status,
     );
   }
 

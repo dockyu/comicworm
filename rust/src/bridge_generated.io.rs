@@ -5,9 +5,9 @@ use super::*;
 pub extern "C" fn wire_perform_search(
     port_: i64,
     query: *mut wire_uint_8_list,
-    sites_status: *mut wire_uint_8_list,
+    sources_status: *mut wire_uint_8_list,
 ) {
-    wire_perform_search_impl(port_, query, sites_status)
+    wire_perform_search_impl(port_, query, sources_status)
 }
 
 #[no_mangle]

@@ -1,8 +1,8 @@
 use serde_json::{json, Value};
 
-pub fn perform_search(query: String, sites_status: String) -> String {
+pub fn perform_search(query: String, sources_status: String) -> String {
     // 解析 sites_status JSON 字符串
-    let sources: Value = serde_json::from_str(&sites_status).unwrap();
+    let sources: Value = serde_json::from_str(&sources_status).unwrap();
 
     let mut results = vec![];
 
