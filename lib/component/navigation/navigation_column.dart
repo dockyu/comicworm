@@ -24,6 +24,7 @@ class _NavigationColumnState extends State<NavigationColumn> {
           _buildNavItem(Icons.search, '搜尋', 0),
           _buildNavItem(Icons.download, '下載', 1),
           _buildNavItem(Icons.settings, '設定', 2),
+          _buildNavItem(Icons.bug_report, '測試', 3),
         ],
       ),
     );

@@ -5,6 +5,7 @@ import 'component/navigation/navigation_column.dart';
 import 'screen/download_screen.dart';
 import 'screen/search_screen.dart';
 import 'screen/setting_screen.dart';
+import 'screen/test_screen.dart';
 
 class HomePage extends StatefulWidget {
   final RustImpl rust;
@@ -28,6 +29,7 @@ class _HomePageState extends State<HomePage> {
       SearchScreen(rust: widget.rust),
       DownloadScreen(rust: widget.rust),
       SettingScreen(rust: widget.rust),
+      TestScreen(rust: widget.rust),
     ];
   }
 

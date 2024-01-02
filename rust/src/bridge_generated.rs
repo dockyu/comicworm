@@ -20,6 +20,8 @@ use std::sync::Arc;
 
 // Section: imports
 
+use crate::test_module::SimpleClass;
+
 // Section: wire functions
 
 fn wire_perform_search_impl(
@@ -37,6 +39,53 @@ fn wire_perform_search_impl(
             let api_query = query.wire2api();
             let api_sites_status = sites_status.wire2api();
             move |task_callback| Result::<_, ()>::Ok(perform_search(api_query, api_sites_status))
+        },
+    )
+}
+fn wire_create_simple_class_impl(port_: MessagePort, property: impl Wire2Api<String> + UnwindSafe) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap::<_, _, _, SimpleClass, _>(
+        WrapInfo {
+            debug_name: "create_simple_class",
+            port: Some(port_),
+            mode: FfiCallMode::Normal,
+        },
+        move || {
+            let api_property = property.wire2api();
+            move |task_callback| Result::<_, ()>::Ok(create_simple_class(api_property))
+        },
+    )
+}
+fn wire_print_simple_class_property_impl(
+    port_: MessagePort,
+    class_instance: impl Wire2Api<SimpleClass> + UnwindSafe,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap::<_, _, _, (), _>(
+        WrapInfo {
+            debug_name: "print_simple_class_property",
+            port: Some(port_),
+            mode: FfiCallMode::Normal,
+        },
+        move || {
+            let api_class_instance = class_instance.wire2api();
+            move |task_callback| {
+                Result::<_, ()>::Ok(print_simple_class_property(api_class_instance))
+            }
+        },
+    )
+}
+fn wire_get_simple_class_property_impl(
+    port_: MessagePort,
+    class_instance: impl Wire2Api<SimpleClass> + UnwindSafe,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap::<_, _, _, String, _>(
+        WrapInfo {
+            debug_name: "get_simple_class_property",
+            port: Some(port_),
+            mode: FfiCallMode::Normal,
+        },
+        move || {
+            let api_class_instance = class_instance.wire2api();
+            move |task_callback| Result::<_, ()>::Ok(get_simple_class_property(api_class_instance))
         },
     )
 }
@@ -70,6 +119,18 @@ impl Wire2Api<u8> for u8 {
 }
 
 // Section: impl IntoDart
+
+impl support::IntoDart for SimpleClass {
+    fn into_dart(self) -> support::DartAbi {
+        vec![self.property.into_into_dart().into_dart()].into_dart()
+    }
+}
+impl support::IntoDartExceptPrimitive for SimpleClass {}
+impl rust2dart::IntoIntoDart<SimpleClass> for SimpleClass {
+    fn into_into_dart(self) -> Self {
+        self
+    }
+}
 
 // Section: executor
 

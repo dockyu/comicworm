@@ -15,6 +15,29 @@ abstract class Rust {
       {required String query, required String sitesStatus, dynamic hint});
 
   FlutterRustBridgeTaskConstMeta get kPerformSearchConstMeta;
+
+  Future<SimpleClass> createSimpleClass(
+      {required String property, dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta get kCreateSimpleClassConstMeta;
+
+  Future<void> printSimpleClassProperty(
+      {required SimpleClass classInstance, dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta get kPrintSimpleClassPropertyConstMeta;
+
+  Future<String> getSimpleClassProperty(
+      {required SimpleClass classInstance, dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta get kGetSimpleClassPropertyConstMeta;
+}
+
+class SimpleClass {
+  final String property;
+
+  const SimpleClass({
+    required this.property,
+  });
 }
 
 class RustImpl implements Rust {
@@ -46,6 +69,65 @@ class RustImpl implements Rust {
         argNames: ["query", "sitesStatus"],
       );
 
+  Future<SimpleClass> createSimpleClass(
+      {required String property, dynamic hint}) {
+    var arg0 = _platform.api2wire_String(property);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner.wire_create_simple_class(port_, arg0),
+      parseSuccessData: _wire2api_simple_class,
+      parseErrorData: null,
+      constMeta: kCreateSimpleClassConstMeta,
+      argValues: [property],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta get kCreateSimpleClassConstMeta =>
+      const FlutterRustBridgeTaskConstMeta(
+        debugName: "create_simple_class",
+        argNames: ["property"],
+      );
+
+  Future<void> printSimpleClassProperty(
+      {required SimpleClass classInstance, dynamic hint}) {
+    var arg0 = _platform.api2wire_box_autoadd_simple_class(classInstance);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) =>
+          _platform.inner.wire_print_simple_class_property(port_, arg0),
+      parseSuccessData: _wire2api_unit,
+      parseErrorData: null,
+      constMeta: kPrintSimpleClassPropertyConstMeta,
+      argValues: [classInstance],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta get kPrintSimpleClassPropertyConstMeta =>
+      const FlutterRustBridgeTaskConstMeta(
+        debugName: "print_simple_class_property",
+        argNames: ["classInstance"],
+      );
+
+  Future<String> getSimpleClassProperty(
+      {required SimpleClass classInstance, dynamic hint}) {
+    var arg0 = _platform.api2wire_box_autoadd_simple_class(classInstance);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) =>
+          _platform.inner.wire_get_simple_class_property(port_, arg0),
+      parseSuccessData: _wire2api_String,
+      parseErrorData: null,
+      constMeta: kGetSimpleClassPropertyConstMeta,
+      argValues: [classInstance],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta get kGetSimpleClassPropertyConstMeta =>
+      const FlutterRustBridgeTaskConstMeta(
+        debugName: "get_simple_class_property",
+        argNames: ["classInstance"],
+      );
+
   void dispose() {
     _platform.dispose();
   }
@@ -55,12 +137,25 @@ class RustImpl implements Rust {
     return raw as String;
   }
 
+  SimpleClass _wire2api_simple_class(dynamic raw) {
+    final arr = raw as List<dynamic>;
+    if (arr.length != 1)
+      throw Exception('unexpected arr length: expect 1 but see ${arr.length}');
+    return SimpleClass(
+      property: _wire2api_String(arr[0]),
+    );
+  }
+
   int _wire2api_u8(dynamic raw) {
     return raw as int;
   }
 
   Uint8List _wire2api_uint_8_list(dynamic raw) {
     return raw as Uint8List;
+  }
+
+  void _wire2api_unit(dynamic raw) {
+    return;
   }
 }
 
@@ -84,6 +179,14 @@ class RustPlatform extends FlutterRustBridgeBase<RustWire> {
   }
 
   @protected
+  ffi.Pointer<wire_SimpleClass> api2wire_box_autoadd_simple_class(
+      SimpleClass raw) {
+    final ptr = inner.new_box_autoadd_simple_class_0();
+    _api_fill_to_wire_simple_class(raw, ptr.ref);
+    return ptr;
+  }
+
+  @protected
   ffi.Pointer<wire_uint_8_list> api2wire_uint_8_list(Uint8List raw) {
     final ans = inner.new_uint_8_list_0(raw.length);
     ans.ref.ptr.asTypedList(raw.length).setAll(0, raw);
@@ -92,6 +195,16 @@ class RustPlatform extends FlutterRustBridgeBase<RustWire> {
 // Section: finalizer
 
 // Section: api_fill_to_wire
+
+  void _api_fill_to_wire_box_autoadd_simple_class(
+      SimpleClass apiObj, ffi.Pointer<wire_SimpleClass> wireObj) {
+    _api_fill_to_wire_simple_class(apiObj, wireObj.ref);
+  }
+
+  void _api_fill_to_wire_simple_class(
+      SimpleClass apiObj, wire_SimpleClass wireObj) {
+    wireObj.property = api2wire_String(apiObj.property);
+  }
 }
 
 // ignore_for_file: camel_case_types, non_constant_identifier_names, avoid_positional_boolean_parameters, annotate_overrides, constant_identifier_names
@@ -209,6 +322,70 @@ class RustWire implements FlutterRustBridgeWireBase {
       void Function(
           int, ffi.Pointer<wire_uint_8_list>, ffi.Pointer<wire_uint_8_list>)>();
 
+  void wire_create_simple_class(
+    int port_,
+    ffi.Pointer<wire_uint_8_list> property,
+  ) {
+    return _wire_create_simple_class(
+      port_,
+      property,
+    );
+  }
+
+  late final _wire_create_simple_classPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ffi.Int64,
+              ffi.Pointer<wire_uint_8_list>)>>('wire_create_simple_class');
+  late final _wire_create_simple_class = _wire_create_simple_classPtr
+      .asFunction<void Function(int, ffi.Pointer<wire_uint_8_list>)>();
+
+  void wire_print_simple_class_property(
+    int port_,
+    ffi.Pointer<wire_SimpleClass> class_instance,
+  ) {
+    return _wire_print_simple_class_property(
+      port_,
+      class_instance,
+    );
+  }
+
+  late final _wire_print_simple_class_propertyPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(ffi.Int64, ffi.Pointer<wire_SimpleClass>)>>(
+      'wire_print_simple_class_property');
+  late final _wire_print_simple_class_property =
+      _wire_print_simple_class_propertyPtr
+          .asFunction<void Function(int, ffi.Pointer<wire_SimpleClass>)>();
+
+  void wire_get_simple_class_property(
+    int port_,
+    ffi.Pointer<wire_SimpleClass> class_instance,
+  ) {
+    return _wire_get_simple_class_property(
+      port_,
+      class_instance,
+    );
+  }
+
+  late final _wire_get_simple_class_propertyPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(ffi.Int64, ffi.Pointer<wire_SimpleClass>)>>(
+      'wire_get_simple_class_property');
+  late final _wire_get_simple_class_property =
+      _wire_get_simple_class_propertyPtr
+          .asFunction<void Function(int, ffi.Pointer<wire_SimpleClass>)>();
+
+  ffi.Pointer<wire_SimpleClass> new_box_autoadd_simple_class_0() {
+    return _new_box_autoadd_simple_class_0();
+  }
+
+  late final _new_box_autoadd_simple_class_0Ptr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<wire_SimpleClass> Function()>>(
+          'new_box_autoadd_simple_class_0');
+  late final _new_box_autoadd_simple_class_0 =
+      _new_box_autoadd_simple_class_0Ptr
+          .asFunction<ffi.Pointer<wire_SimpleClass> Function()>();
+
   ffi.Pointer<wire_uint_8_list> new_uint_8_list_0(
     int len,
   ) {
@@ -246,6 +423,10 @@ final class wire_uint_8_list extends ffi.Struct {
 
   @ffi.Int32()
   external int len;
+}
+
+final class wire_SimpleClass extends ffi.Struct {
+  external ffi.Pointer<wire_uint_8_list> property;
 }
 
 typedef DartPostCObjectFnType = ffi.Pointer<
