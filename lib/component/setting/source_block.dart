@@ -17,7 +17,7 @@ class SourceBlock extends StatelessWidget {
               initiallyExpanded: false,  // 初始時設置為未展開
               children: sources.map((sourceEntry) {
                 return ListTile(
-                  title: Text(sourceEntry.key),
+                  title: Text(sourceEntry.value.sourceName),
                   trailing: Switch(
                     value: sourceEntry.value.isEnabled,
                     onChanged: (bool value) {

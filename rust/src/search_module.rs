@@ -19,7 +19,7 @@ pub fn perform_search(query: String, sites_status: String) -> String {
         }
     }
     // 重複上述邏輯以檢查其他網站
-    if let Some(site) = sites_status.get("包子漫畫") {
+    if let Some(site) = sites_status.get("baozimh") {
         if site["isEnabled"].as_bool().unwrap_or(false) && site["isSelected"].as_bool().unwrap_or(false) {
             results.push(json!({
                 "name": format!("{} - 包子漫畫", &query),

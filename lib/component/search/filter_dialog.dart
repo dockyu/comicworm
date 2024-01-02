@@ -20,7 +20,7 @@ void showFilterDialog(BuildContext context) {
             return SingleChildScrollView(
               child: Column(
                 children: enabledSources.map((sourceEntry) => CheckboxListTile(
-                  title: Text(sourceEntry.key),
+                  title: Text(sourceEntry.value.sourceName), // 這裡使用 sourceName
                   value: sourceEntry.value.isSelected,
                   onChanged: (bool? value) {
                     provider.toggleSiteSelection(sourceEntry.key);
