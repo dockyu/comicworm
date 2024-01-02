@@ -2,13 +2,13 @@ use serde_json::{json, Value};
 
 pub fn perform_search(query: String, sites_status: String) -> String {
     // 解析 sites_status JSON 字符串
-    let sites_status: Value = serde_json::from_str(&sites_status).unwrap();
+    let sources: Value = serde_json::from_str(&sites_status).unwrap();
 
     let mut results = vec![];
 
     // 對每個網站單獨進行判斷
-    if let Some(site) = sites_status.get("webtoon") {
-        if site["isEnabled"].as_bool().unwrap_or(false) && site["isSelected"].as_bool().unwrap_or(false) {
+    if let Some(source) = sources.get("webtoon") {
+        if source["isEnabled"].as_bool().unwrap_or(false) && source["isSelected"].as_bool().unwrap_or(false) {
             results.push(json!({
                 "name": format!("{} - webtoon", &query),
                 "url": "https://www.webtoons.com/zh-hant/city-office/newface/list?title_no=1759",
@@ -19,8 +19,8 @@ pub fn perform_search(query: String, sites_status: String) -> String {
         }
     }
     // 重複上述邏輯以檢查其他網站
-    if let Some(site) = sites_status.get("baozimh") {
-        if site["isEnabled"].as_bool().unwrap_or(false) && site["isSelected"].as_bool().unwrap_or(false) {
+    if let Some(source) = sources.get("baozimh") {
+        if source["isEnabled"].as_bool().unwrap_or(false) && source["isSelected"].as_bool().unwrap_or(false) {
             results.push(json!({
                 "name": format!("{} - 包子漫畫", &query),
                 "url": "https://www.baozimh.com/comic/shiyouzhiguocaiseban-dinianmiaogongzuoshi",
