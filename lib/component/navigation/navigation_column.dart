@@ -12,7 +12,7 @@ class NavigationColumn extends StatefulWidget {
 
 class _NavigationColumnState extends State<NavigationColumn> {
   int _selectedIndex = 0; // 將選中索引作為狀態
-  static const Color backgroundColor = Color(0xFF685577); // 導航欄使用的顏色
+  static const Color backgroundColor = Color(0xFF6750A4); // 導航欄使用的顏色
   static const Color objectColor = Color(0xFFD7D6D6); // 導航欄item使用的顏色
 
   @override
