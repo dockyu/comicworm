@@ -4,15 +4,20 @@ import 'provider/search_result_provider.dart';
 import 'provider/source_provider.dart';
 import 'app.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // 創建 SourceProvider 實例並加載設置
+  var sourceProvider = SourceProvider();
+  await sourceProvider.loadSettings();
+
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => SearchResultProvider()),
-        ChangeNotifierProvider(create: (context) => SourceProvider()),
+        ChangeNotifierProvider<SearchResultProvider>(create: (context) => SearchResultProvider()),
+        ChangeNotifierProvider<SourceProvider>.value(value: sourceProvider),
       ],
       child: App(),
     ),
-    
   );
 }
