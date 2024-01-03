@@ -2,6 +2,15 @@ use super::*;
 // Section: wire functions
 
 #[no_mangle]
+pub extern "C" fn wire_ffi_search(
+    port_: i64,
+    query: *mut wire_uint_8_list,
+    sources_status: *mut wire_uint_8_list,
+) {
+    wire_ffi_search_impl(port_, query, sources_status)
+}
+
+#[no_mangle]
 pub extern "C" fn wire_perform_search(
     port_: i64,
     query: *mut wire_uint_8_list,

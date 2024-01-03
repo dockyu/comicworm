@@ -39,12 +39,11 @@ class _SearchBoxState extends State<SearchBox> {
 
       final sourcesStatusJson = json.encode(sourcesStatus);
 
-      final jsonString = await widget.rust.performSearch(query: query, sourcesStatus: sourcesStatusJson);
-      final Map<String, dynamic> jsonMap = json.decode(jsonString);
-      final List<dynamic> jsonList = jsonMap['results'];
-      final List<SearchResult> searchResults = jsonList
-          .map((jsonItem) => SearchResult.fromJson(jsonItem as Map<String, dynamic>))
-          .toList();
+      // print('發送搜索請求: $query, $sourcesStatusJson');
+      final jsonString = await widget.rust.ffiSearch(query: query, sourcesStatus: sourcesStatusJson);
+      // print('接收到的響應: $jsonString');
+      // 使用 SearchResultParser 解析 JSON 字符串
+      final List<SearchResult> searchResults = SearchResultParser.fromJsonList(jsonString);
 
       Provider.of<SearchResultProvider>(context, listen: false).setSearchResults(searchResults);
     } catch (e) {

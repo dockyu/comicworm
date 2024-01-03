@@ -11,6 +11,11 @@ import 'package:uuid/uuid.dart';
 import 'dart:ffi' as ffi;
 
 abstract class Rust {
+  Future<String> ffiSearch(
+      {required String query, required String sourcesStatus, dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta get kFfiSearchConstMeta;
+
   Future<String> performSearch(
       {required String query, required String sourcesStatus, dynamic hint});
 
@@ -48,6 +53,26 @@ class RustImpl implements Rust {
   factory RustImpl.wasm(FutureOr<WasmModule> module) =>
       RustImpl(module as ExternalLibrary);
   RustImpl.raw(this._platform);
+  Future<String> ffiSearch(
+      {required String query, required String sourcesStatus, dynamic hint}) {
+    var arg0 = _platform.api2wire_String(query);
+    var arg1 = _platform.api2wire_String(sourcesStatus);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner.wire_ffi_search(port_, arg0, arg1),
+      parseSuccessData: _wire2api_String,
+      parseErrorData: null,
+      constMeta: kFfiSearchConstMeta,
+      argValues: [query, sourcesStatus],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta get kFfiSearchConstMeta =>
+      const FlutterRustBridgeTaskConstMeta(
+        debugName: "ffi_search",
+        argNames: ["query", "sourcesStatus"],
+      );
+
   Future<String> performSearch(
       {required String query, required String sourcesStatus, dynamic hint}) {
     var arg0 = _platform.api2wire_String(query);
@@ -301,6 +326,26 @@ class RustWire implements FlutterRustBridgeWireBase {
           'init_frb_dart_api_dl');
   late final _init_frb_dart_api_dl = _init_frb_dart_api_dlPtr
       .asFunction<int Function(ffi.Pointer<ffi.Void>)>();
+
+  void wire_ffi_search(
+    int port_,
+    ffi.Pointer<wire_uint_8_list> query,
+    ffi.Pointer<wire_uint_8_list> sources_status,
+  ) {
+    return _wire_ffi_search(
+      port_,
+      query,
+      sources_status,
+    );
+  }
+
+  late final _wire_ffi_searchPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ffi.Int64, ffi.Pointer<wire_uint_8_list>,
+              ffi.Pointer<wire_uint_8_list>)>>('wire_ffi_search');
+  late final _wire_ffi_search = _wire_ffi_searchPtr.asFunction<
+      void Function(
+          int, ffi.Pointer<wire_uint_8_list>, ffi.Pointer<wire_uint_8_list>)>();
 
   void wire_perform_search(
     int port_,

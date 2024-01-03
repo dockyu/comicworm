@@ -24,6 +24,24 @@ use crate::test_module::SimpleClass;
 
 // Section: wire functions
 
+fn wire_ffi_search_impl(
+    port_: MessagePort,
+    query: impl Wire2Api<String> + UnwindSafe,
+    sources_status: impl Wire2Api<String> + UnwindSafe,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap::<_, _, _, String, _>(
+        WrapInfo {
+            debug_name: "ffi_search",
+            port: Some(port_),
+            mode: FfiCallMode::Normal,
+        },
+        move || {
+            let api_query = query.wire2api();
+            let api_sources_status = sources_status.wire2api();
+            move |task_callback| Result::<_, ()>::Ok(ffi_search(api_query, api_sources_status))
+        },
+    )
+}
 fn wire_perform_search_impl(
     port_: MessagePort,
     query: impl Wire2Api<String> + UnwindSafe,

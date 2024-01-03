@@ -1,14 +1,31 @@
 // api.rs
 
 use flutter_rust_bridge::frb;
+use std::sync::Mutex;
+use once_cell::sync::OnceCell;
 use crate::search_module;
 use crate::test_module::SimpleClass;
+use crate::crawler_manager::CrawlerManager;
 
+static GLOBAL_CRAWLER_MANAGER: OnceCell<Mutex<CrawlerManager>> = OnceCell::new();
+
+// 暴露給 Flutter 的 FFI 函數
+#[frb]
+pub fn ffi_search(query: String, sources_status: String) -> String {
+    let crawler_manager = GLOBAL_CRAWLER_MANAGER
+        .get_or_init(|| Mutex::new(CrawlerManager::new()))
+        .lock().unwrap();
+
+    crawler_manager.search(query, sources_status)
+}
+
+// function的search
 #[frb]
 pub fn perform_search(query: String, sources_status: String) -> String {
     search_module::perform_search(query, sources_status)
 }
 
+// SimpleClass 測試
 #[frb]
 pub fn create_simple_class(property: String) -> SimpleClass {
     SimpleClass::new(property)

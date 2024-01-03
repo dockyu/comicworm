@@ -1143,6 +1143,8 @@ dependencies = [
  "cargo-expand",
  "flutter_rust_bridge",
  "flutter_rust_bridge_codegen",
+ "once_cell",
+ "serde",
  "serde_json",
 ]
 

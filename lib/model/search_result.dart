@@ -17,11 +17,11 @@ class SearchResult {
 
   factory SearchResult.fromJson(Map<String, dynamic> json) {
     return SearchResult(
-      name: json['name'],
-      url: json['url'],
-      source: json['source'],
-      sourceName: json['sourceName'],
-      imageUrl: json['image_url'],
+      name: json['name'] ?? '未知名稱',
+      url: json['url'] ?? '未知網址',
+      source: json['source'] ?? '未知來源',
+      sourceName: json['sourceName'] ?? '未知來源名稱',
+      imageUrl: json['image_url'] ?? '未知圖片網址',
     );
   }
 }

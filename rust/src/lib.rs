@@ -2,3 +2,5 @@ mod bridge_generated; /* AUTO INJECTED BY flutter_rust_bridge. This line may not
 mod search_module;
 mod api;
 mod test_module;
+mod crawler_manager;
+mod crawler;
