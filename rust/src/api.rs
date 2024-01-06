@@ -19,6 +19,21 @@ pub fn ffi_search(query: String, sources_status: String) -> String {
     crawler_manager.search(query, sources_status)
 }
 
+/*
+    測試用
+    新增一個 FFI 函數來操作 count
+*/
+
+#[frb]
+pub fn ffi_increment_and_print_count() {
+    let mut crawler_manager = GLOBAL_CRAWLER_MANAGER
+        .get_or_init(|| Mutex::new(CrawlerManager::new()))
+        .lock().unwrap();
+
+    crawler_manager.increment_count();
+    crawler_manager.print_count();
+}
+
 // function的search
 #[frb]
 pub fn perform_search(query: String, sources_status: String) -> String {

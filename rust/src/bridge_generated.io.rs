@@ -11,6 +11,11 @@ pub extern "C" fn wire_ffi_search(
 }
 
 #[no_mangle]
+pub extern "C" fn wire_ffi_increment_and_print_count(port_: i64) {
+    wire_ffi_increment_and_print_count_impl(port_)
+}
+
+#[no_mangle]
 pub extern "C" fn wire_perform_search(
     port_: i64,
     query: *mut wire_uint_8_list,

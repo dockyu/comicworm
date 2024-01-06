@@ -42,6 +42,16 @@ fn wire_ffi_search_impl(
         },
     )
 }
+fn wire_ffi_increment_and_print_count_impl(port_: MessagePort) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap::<_, _, _, (), _>(
+        WrapInfo {
+            debug_name: "ffi_increment_and_print_count",
+            port: Some(port_),
+            mode: FfiCallMode::Normal,
+        },
+        move || move |task_callback| Result::<_, ()>::Ok(ffi_increment_and_print_count()),
+    )
+}
 fn wire_perform_search_impl(
     port_: MessagePort,
     query: impl Wire2Api<String> + UnwindSafe,

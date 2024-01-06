@@ -2,11 +2,13 @@ use crate::crawler::*;
 use serde_json::to_string;
 use std::{sync::Arc, thread};
 
-pub struct CrawlerManager;
+pub struct CrawlerManager {
+    count: i32, // 測試用
+}
 
 impl CrawlerManager {
     pub fn new() -> Self {
-        CrawlerManager
+        CrawlerManager { count: 0 } // 初始化 count 為 0
     }
 
     pub fn search(&self, query: String, sources_status: String) -> String {
@@ -37,5 +39,17 @@ impl CrawlerManager {
         }
 
         to_string(&all_results).unwrap()
+    }
+
+
+    /*
+        測試用
+    */
+    pub fn increment_count(&mut self) {
+        self.count += 1; // 定義一個方法來增加 count
+    }
+
+    pub fn print_count(&self) {
+        println!("Count: {}", self.count); // 定義一個方法來打印 count
     }
 }

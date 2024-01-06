@@ -50,6 +50,13 @@ class _TestScreenState extends State<TestScreen> {
               onPressed: _getProperty,
               child: Text('Get Property'),
             ),
+            ElevatedButton(
+              onPressed: () async {
+                await widget.rust.ffiIncrementAndPrintCount();
+              },
+              child: Text('count++ & print'),
+            ),
+
           ],
         ),
       ),

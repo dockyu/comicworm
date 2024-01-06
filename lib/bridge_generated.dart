@@ -16,6 +16,10 @@ abstract class Rust {
 
   FlutterRustBridgeTaskConstMeta get kFfiSearchConstMeta;
 
+  Future<void> ffiIncrementAndPrintCount({dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta get kFfiIncrementAndPrintCountConstMeta;
+
   Future<String> performSearch(
       {required String query, required String sourcesStatus, dynamic hint});
 
@@ -71,6 +75,24 @@ class RustImpl implements Rust {
       const FlutterRustBridgeTaskConstMeta(
         debugName: "ffi_search",
         argNames: ["query", "sourcesStatus"],
+      );
+
+  Future<void> ffiIncrementAndPrintCount({dynamic hint}) {
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) =>
+          _platform.inner.wire_ffi_increment_and_print_count(port_),
+      parseSuccessData: _wire2api_unit,
+      parseErrorData: null,
+      constMeta: kFfiIncrementAndPrintCountConstMeta,
+      argValues: [],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta get kFfiIncrementAndPrintCountConstMeta =>
+      const FlutterRustBridgeTaskConstMeta(
+        debugName: "ffi_increment_and_print_count",
+        argNames: [],
       );
 
   Future<String> performSearch(
@@ -346,6 +368,20 @@ class RustWire implements FlutterRustBridgeWireBase {
   late final _wire_ffi_search = _wire_ffi_searchPtr.asFunction<
       void Function(
           int, ffi.Pointer<wire_uint_8_list>, ffi.Pointer<wire_uint_8_list>)>();
+
+  void wire_ffi_increment_and_print_count(
+    int port_,
+  ) {
+    return _wire_ffi_increment_and_print_count(
+      port_,
+    );
+  }
+
+  late final _wire_ffi_increment_and_print_countPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64)>>(
+          'wire_ffi_increment_and_print_count');
+  late final _wire_ffi_increment_and_print_count =
+      _wire_ffi_increment_and_print_countPtr.asFunction<void Function(int)>();
 
   void wire_perform_search(
     int port_,
