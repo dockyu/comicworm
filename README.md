@@ -16,6 +16,17 @@ An integrated comic crawler.
 flutter pub get
 ```
 
+### Install Tools
+
+```
+cargo install flutter_rust_bridge_codegen --version 1.82.6
+cargo install cargo-expand
+```
+
+### Install Git (to system path)
+
+[git for windows](https://gitforwindows.org/)
+
 ## Build
 
 ### Generate Dart FFI
